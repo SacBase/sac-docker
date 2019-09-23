@@ -1,3 +1,9 @@
 # we build and publish the docker container
 docker_builder:
-    build_script: docker build --tag sacbase/sac-compiler:latest --tag sacbase/sac-compiler:${CIRRUS_RELEASE} .
+    only_if: $CIRRUS_TAG != ''
+    env:
+        DOCKER_USERNAME: ENCRYPTED[7938c4280931ad6ddeb254a70e880d4d494fe8220f4f3a26d0ac683c79064a238c5f2d5ea73b4ca71c01b65b0bf6ee6a]
+        DOCKER_PASSWORD: ENCRYPTED[3c8460d178a3054a00507ebf7d8b6a499a1b98887eb9cc906513c365ee1f6d464fe02d0770cc969ffed01a4bebb23d01]
+    build_script: docker build -t sacbase/sac-compiler:latest -t sacbase/sac-compiler:$CIRRUS_TAG .
+    login_script: docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+    push_script: docker push sacbase/sac-compiler:$CIRRUS_TAG
