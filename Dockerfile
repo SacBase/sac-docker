@@ -4,8 +4,8 @@ FROM jupyter/minimal-notebook:latest
 
 LABEL maintainer="SaC Development Team <info@sac-home.org>"
 
-ARG SAC2CVER=1.3.3-MijasCosta-709-g8fa2
-ARG STDLIBVER=1.3-137-g1cad5
+ENV SAC2CVER=1.3.3-MijasCosta-709-g8fa2
+ENV STDLIBVER=1.3-137-g1cad5
 
 USER root
 
@@ -36,11 +36,6 @@ RUN cd /home/$ND_USER && mkdir temp && cd temp \
     && python setup.py install \
     && cd /home/$ND_USER && rm -rf temp
 
-# install CNN repo as an example
-#RUN cd /home/$NB_USER \
-#    && git clone --recursive https://github.com/SacBase/CNN.git \
-#    && chown -R $NB_USER:users /home/$NB_USER
-
 # install SaC Jupyter kernel
 RUN cd /home/$NB_USER \
     && git clone https://github.com/hv15/sac-jupyter.git .sac-jupyter \
@@ -67,6 +62,6 @@ RUN echo y | jupyter notebook --generate-config && echo y | jupyter server --gen
     >> /home/$NB_USER/.jupyter/jupyter_server_config.py \
     && echo y | jupyter kernelspec uninstall python3
 
-# add tutorial
-COPY --chown=$NB_UID:$NB_GID sac-start.ipynb $HOME/sac-tutorial.ipynb
+# add example notebook
+COPY --chown=$NB_UID:$NB_GID sac-example-notebook.ipynb $HOME/
 
