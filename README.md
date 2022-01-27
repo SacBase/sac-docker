@@ -8,6 +8,6 @@ with the [SaC Jupyter kernel][1] included.
 
 Pre-built Docker images are available on [DockerHub](https://hub.docker.com/r/sacbase/sac-jupyter-notebook).
 
-**You can also run it directly with the [Binder.org service](https://mybinder.org/v2/gh/SacBase/sac-jupyter-notebook/HEAD)!**
+**You can also run it directly with the [MyBinder.org service](https://mybinder.org/v2/gh/SacBase/sac-jupyter-notebook/HEAD)!**
 
 [1]: https://github.com/SacBase/sac-jupyter
