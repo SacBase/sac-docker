@@ -39,7 +39,7 @@ RUN cd /home/$ND_USER && mkdir temp && cd temp \
 
 # install SaC Jupyter kernel
 RUN cd /home/$NB_USER \
-    && git clone https://github.com/hv15/sac-jupyter.git .sac-jupyter \
+    && git clone https://github.com/SacBase/sac-jupyter.git .sac-jupyter \
     && cd .sac-jupyter \
     && mkdir -p /home/$NB_USER/.local/share/jupyter/kernels/sac \
     && echo "{\"argv\": [\"python3\", \"/home/$NB_USER/.sac-jupyter/kernel.py\", \"-f\", \"{connection_file}\"], \"display_name\": \"SaC\", \"language\": \"sac\" }" > /home/$NB_USER/.local/share/jupyter/kernels/sac/kernel.json \
