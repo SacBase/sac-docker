@@ -44,9 +44,9 @@ RUN cd /home/$NB_USER \
     && mkdir -p /home/$NB_USER/.local/share/jupyter/kernels/sac \
     && echo "{\"argv\": [\"python3\", \"/home/$NB_USER/.sac-jupyter/kernel.py\", \"-f\", \"{connection_file}\"], \"display_name\": \"SaC\", \"language\": \"sac\" }" > /home/$NB_USER/.local/share/jupyter/kernels/sac/kernel.json \
     && cp sac/kernel.js /home/$NB_USER/.local/share/jupyter/kernels/sac \
-    && sed -i "s/\([ \t]*\)p = '\/tmp\/sac2c'/\1p = '\/usr\/local\/libexec\/sac2c\/$SAC2CVER'/g" kernel.py \
-    && sed -i "s/\([ \t]*\)self.sac2c_bin = p + '\/build_r\/sac2c_p'/\1self.sac2c_bin = p + '\/sac2c_p'/g" kernel.py \
-    && sed -i "s/\([ \t]*\)self.sac2c_so = p + '\/build_r\/lib\/libsac2c_p.so'/\1self.sac2c_so = p + '\/libsac2c_p.so'/g" kernel.py \
+    && sed -i "s/\([ \t]*\)p = '\/Volumes\/Users\/sbs\/sac2c'/\1p = '\/usr\/local\/libexec\/sac2c\/$SAC2CVER'/g" kernel.py \
+    && sed -i "s/\([ \t]*\)self.sac2c_bin = p + '\/build_p\/sac2c_p'/\1self.sac2c_bin = p + '\/sac2c_p'/g" kernel.py \
+    && sed -i "s/\([ \t]*\)self.sac2c_so = p + '\/build_p\/lib\/libsac2c_p.dylib'/\1self.sac2c_so = p + '\/libsac2c_p.so'/g" kernel.py \
     && chown -R $NB_USER:users /home/$NB_USER
 
 USER $NB_UID
