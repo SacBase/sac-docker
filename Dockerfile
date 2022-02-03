@@ -4,8 +4,9 @@ FROM jupyter/minimal-notebook:latest
 
 LABEL maintainer="SaC Development Team <info@sac-home.org>"
 
-ENV SAC2CVER=1.3.3-MijasCosta-709-g8fa2
-ENV STDLIBVER=1.3-137-g1cad5
+ENV SACVER=1.3.3-718-1
+ENV SAC2CVER=1.3.3-MijasCosta-718-g26409
+ENV STDLIBVER=1.3-139-g6ba9
 
 USER root
 
@@ -16,8 +17,8 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
       && apt-get clean && apt-get autoclean && apt-get --purge autoremove
 
 # Install SaC compiler and stdlib
-ADD https://gitlab.sac-home.org/sac-group/sac-packages/-/raw/master/packages/weekly/Ubl20/1.3.3-709-1/basic/sac2c-1.3.3-MijasCosta-709-g8fa2-omnibus.deb .
-ADD https://gitlab.sac-home.org/sac-group/sac-packages/-/raw/master/packages/weekly/Ubl20/1.3.3-709-1/basic/sac-stdlib-1.3-137-g1cad5.deb .
+ADD https://gitlab.sac-home.org/sac-group/sac-packages/-/raw/master/packages/weekly/Ubl20/${SACVER}/basic/sac2c-${SAC2CVER}-omnibus.deb .
+ADD https://gitlab.sac-home.org/sac-group/sac-packages/-/raw/master/packages/weekly/Ubl20/${SACVER}/basic/sac-stdlib-${STDLIBVER}.deb .
 RUN apt-get install -yq ./sac2c-$SAC2CVER-omnibus.deb \
     && apt-get install -yq ./sac-stdlib-$STDLIBVER.deb \
     && rm *.deb \
