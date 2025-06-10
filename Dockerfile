@@ -2,6 +2,9 @@ FROM jupyter/base-notebook:latest
 
 LABEL maintainer="SaC Development Team <info@sac-home.org>"
 
+# Setup Jupyter
+RUN jupyter lab --generate-config
+
 USER root
 
 RUN apt update \
@@ -19,6 +22,8 @@ RUN apt update \
 
 WORKDIR /home/$NB_USER
 
+# Check for changes on remote (sac2c had project id 133)
+ADD "https://gitlab.sac-home.org/api/v4/projects/133/repository/commits?per_page=1" latest_commit
 # Build and install SaC compiler
 RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/sac2c.git \
     && cd sac2c \
@@ -26,6 +31,8 @@ RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/
     && cp build_p/sac2c_p /usr/local/bin/sac2c \
     && sac2c -V
 
+# Check for changes on remote
+ADD "https://api.github.com/repos/SacBase/Stdlib/commits?per_page=1" latest_commit
 # Build and install SaC standard library
 RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git \
     && cd Stdlib \
@@ -38,9 +45,8 @@ RUN echo "use Array: all; int main() { a = [0,1,2]; StdIO::print(a); return a[0]
     && ./a.out \
     && rm a.out
 
-# Setup Jupyter
-RUN jupyter lab --generate-config
-
+# Check for changes on remote
+ADD "https://api.github.com/repos/SacBase/sac-jupyter/commits?per_page=1" latest_commit
 # Install SaC Jupyter kernel
 RUN git clone --single-branch https://github.com/SacBase/sac-jupyter.git \
     && cd sac-jupyter \
