@@ -38,6 +38,9 @@ RUN echo "use Array: all; int main() { a = [0,1,2]; StdIO::print(a); return a[0]
     && ./a.out \
     && rm a.out
 
+# Setup Jupyter
+RUN jupyter lab --generate-config
+
 # Install SaC Jupyter kernel
 RUN git clone --single-branch https://github.com/SacBase/sac-jupyter.git \
     && cd sac-jupyter \
