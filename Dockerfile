@@ -2,9 +2,6 @@ FROM jupyter/base-notebook:latest
 
 LABEL maintainer="SaC Development Team <info@sac-home.org>"
 
-# Setup Jupyter
-RUN jupyter lab --generate-config
-
 USER root
 
 RUN apt update \
