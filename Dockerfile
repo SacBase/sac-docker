@@ -30,7 +30,7 @@ RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/
 RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git \
     && cd Stdlib \
     && mkdir build && cd build \
-    && cmake -DBUILD_EXT=OFF -DTARGETS="seq;seq_checks" .. \
+    && cmake -DBUILD_EXT=OFF -DTARGETS="seq;seq_checks" -DLINKSETSIZE=200 .. \
     && make -j4
 
 # Check SaC installation
