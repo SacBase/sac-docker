@@ -7,6 +7,16 @@ This repository contains the base Dockerfile used for constructing a Jupyter Not
 
 Pre-built Docker images are available on [DockerHub](https://hub.docker.com/r/sacbase/sac-jupyter-notebook).
 
+Pull the most recent image with:
+
 ```
-docker run -p 8888:8888 sacbase/sac-jupyter-notebook
+docker pull sacbase/sac-jupyter-notebook
 ```
+
+And start the Jupyter notebook using:
+
+```
+docker run -rm -p 8888:8888 sacbase/sac-jupyter-notebook
+```
+
+When starting the container multiple URLs will be spat out; use the one starting with `127.0.0.1:8888`.
