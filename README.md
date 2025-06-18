@@ -7,7 +7,7 @@ This repository contains the base Dockerfiles used for compiling and running SaC
 
 Pre-built Docker images are available on [DockerHub](https://hub.docker.com/u/sacbase).
 
-## Try out SaC
+## Try out SaC interactively
 
 For first time users of SaC we recommend using the Jupyter Notebook environment.
 
@@ -23,4 +23,24 @@ And start the Jupyter notebook using:
 docker run -p 8888:8888 sacbase/sac-jupyter-notebook
 ```
 
-When starting the container multiple URLs will be printed; use the one starting with `127.0.0.1:8888`.
+After the container has started multiple URLs will be printed; use the one starting with `127.0.0.1:8888`.
+
+## Local development with Visual Studio Code
+
+For compiling SaC programs we recommend the [sac-compiler](https://hub.docker.com/r/sacbase/sac-compiler) Docker container.
+
+Using this container with Visual Studio Code requires the `Dev Containers` extension.
+Check the [documentation](https://code.visualstudio.com/docs/devcontainers/containers) for a comprehensive tutorial.
+
+In short: first add the following `.devcontainer.json` file to your local development directory
+
+```json
+{
+  "image": "sacbase/sac-compiler"
+}
+```
+
+In VS Code run the `Dev Containers: Open Folder in Container...` command from the Command Palette (`F1`).
+
+You have now opened your local development directory within the SaC Docker container, with full access to the `sac2c` compiler and standard library.
+Happy developing!
