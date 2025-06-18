@@ -1,8 +1,6 @@
-FROM jupyter/base-notebook:latest
+FROM ubuntu:latest
 
 LABEL maintainer="SaC Development Team <info@sac-home.org>"
-
-USER root
 
 RUN apt update \
     && apt install -y --no-install-recommends \
@@ -17,14 +15,12 @@ RUN apt update \
     && apt autoclean \
     && apt --purge autoremove
 
-WORKDIR /home/$NB_USER
-
-# Check for changes on remote (sac2c had project id 133)
+# Check for changes on remote (sac2c has project id 133)
 ADD "https://gitlab.sac-home.org/api/v4/projects/133/repository/commits?per_page=1" latest_commit
 # Build and install SaC compiler
 RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/sac2c.git \
     && cd sac2c \
-    && make release -j2 \
+    && make release -j4 \
     && cp build_p/sac2c_p /usr/local/bin/sac2c \
     && sac2c -V
 
@@ -41,16 +37,3 @@ RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git 
 RUN echo "use Array: all; int main() { a = [0,1,2]; StdIO::print(a); return a[0]; }" | sac2c -check p \
     && ./a.out \
     && rm a.out
-
-# Check for changes on remote
-ADD "https://api.github.com/repos/SacBase/sac-jupyter/commits?per_page=1" latest_commit
-# Install SaC Jupyter kernel
-RUN git clone --single-branch https://github.com/SacBase/sac-jupyter.git \
-    && cd sac-jupyter \
-    && mkdir -p /home/$NB_USER/.local/share/jupyter/kernels/sac \
-    && echo "{\"argv\": [\"python3\", \"/home/$NB_USER/sac-jupyter/kernel.py\", \"-f\", \"{connection_file}\"], \"display_name\": \"SaC\", \"language\": \"sac\" }" \
-        > /home/$NB_USER/.local/share/jupyter/kernels/sac/kernel.json \
-    && cp sac/kernel.js /home/$NB_USER/.local/share/jupyter/kernels/sac \
-    && chown -R $NB_USER:users /home/$NB_USER
-
-USER $NB_UID
