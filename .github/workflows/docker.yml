@@ -16,7 +16,7 @@ jobs:
         flavor: latest=true
         images: sacbase/sac-compiler
         tags: type=sha
-    - name: Set up Docker build
+    - name: Setup Docker build
       uses: docker/setup-buildx-action@v3
     - name: Login to DockerHub
       uses: docker/login-action@v3
@@ -30,6 +30,13 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         file: "Dockerfile.compiler"
+    - name: Update DockerHub description
+      uses: peter-evans/dockerhub-description@v4
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        repository: peterevans/dockerhub-description
+
 
   jupyter:
     runs-on: ubuntu-latest
@@ -41,7 +48,7 @@ jobs:
         flavor: latest=true
         images: sacbase/sac-jupyter-notebook
         tags: type=sha
-    - name: Set up Docker build
+    - name: Setup Docker build
       uses: docker/setup-buildx-action@v3
     - name: Login to DockerHub
       uses: docker/login-action@v3
@@ -55,3 +62,9 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         file: "Dockerfile.jupyter"
+    - name: Update DockerHub description
+      uses: peter-evans/dockerhub-description@v4
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        repository: peterevans/dockerhub-description
