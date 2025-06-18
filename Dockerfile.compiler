@@ -5,8 +5,10 @@ LABEL maintainer="SaC Development Team <info@sac-home.org>"
 RUN apt update \
     && apt install -y --no-install-recommends \
         build-essential \
+        ca-certificates \
         cmake \
         git \
+        python3 \
         xsltproc \
         bison \
         flex \
@@ -19,9 +21,10 @@ RUN apt update \
 ADD "https://gitlab.sac-home.org/api/v4/projects/133/repository/commits?per_page=1" latest_commit
 # Build and install SaC compiler
 RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/sac2c.git \
-    && cd sac2c \
-    && make release -j4 \
-    && cp build_p/sac2c_p /usr/local/bin/sac2c \
+    && cd sac2c && mkdir build_p && cd build_p \
+    && cmake -DCMAKE_BUILD_TYPE=RELEASE -DFUNCTESTS=OFF -DBUILDGENERIC=ON .. \
+    && make -j2 \
+    && cp sac2c_p /usr/local/bin/sac2c \
     && sac2c -V
 
 # Check for changes on remote
@@ -30,7 +33,7 @@ ADD "https://api.github.com/repos/SacBase/Stdlib/commits?per_page=1" latest_comm
 RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git \
     && cd Stdlib \
     && mkdir build && cd build \
-    && cmake -DBUILD_EXT=OFF -DTARGETS="seq;seq_checks" -DLINKSETSIZE=200 .. \
+    && cmake -DBUILDGENERIC=ON -DBUILD_EXT=OFF -DTARGETS="seq;seq_checks" -DLINKSETSIZE=200 .. \
     && make -j4
 
 # Check SaC installation

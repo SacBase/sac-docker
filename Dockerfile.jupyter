@@ -24,7 +24,7 @@ ADD "https://gitlab.sac-home.org/api/v4/projects/133/repository/commits?per_page
 # Build and install SaC compiler
 RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/sac2c.git \
     && cd sac2c \
-    && make release -j4 \
+    && make release -j2 \
     && cp build_p/sac2c_p /usr/local/bin/sac2c \
     && sac2c -V
 
