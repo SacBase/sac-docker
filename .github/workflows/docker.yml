@@ -7,7 +7,7 @@ on:
 
 jobs:
   compiler:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
     - name: Docker meta
       id: meta
@@ -28,7 +28,7 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         push: true
-        platforms: linux/amd64,linux/arm64/v8
+        platforms: linux/arm64/v8,linux/amd64
         tags: ${{ steps.meta.outputs.tags }}
         file: "Dockerfile.compiler"
     - name: Update DockerHub description
@@ -40,7 +40,7 @@ jobs:
         readme-filepath: ${{ runner.workspace }}/README.md
 
   jupyter:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
     - name: Docker meta
       id: meta
@@ -61,7 +61,7 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         push: true
-        platforms: linux/amd64,linux/arm64/v8
+        platforms: linux/arm64/v8,linux/amd64
         tags: ${{ steps.meta.outputs.tags }}
         file: "Dockerfile.jupyter"
     - name: Update DockerHub description
