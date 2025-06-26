@@ -20,22 +20,24 @@ RUN apt update \
 WORKDIR /home/$NB_USER
 
 # Check for changes on remote (sac2c has project id 133)
-ADD "https://gitlab.sac-home.org/api/v4/projects/133/repository/commits?per_page=1" latest_commit
+ADD "https://gitlab.sac-home.org/api/v4/projects/133/repository/commits?per_page=1" last_commit
 # Build and install SaC compiler
 RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/sac2c.git \
     && cd sac2c \
     && make release -j2 \
     && cp build_p/sac2c_p /usr/local/bin/sac2c \
     && sac2c -V
+RUN rm last_commit
 
 # Check for changes on remote
-ADD "https://api.github.com/repos/SacBase/Stdlib/commits?per_page=1" latest_commit
+ADD "https://api.github.com/repos/SacBase/Stdlib/commits?per_page=1" last_commit
 # Build and install SaC standard library
 RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git \
     && cd Stdlib \
     && mkdir build && cd build \
     && cmake -DBUILD_EXT=OFF -DTARGETS="seq;seq_checks" -DLINKSETSIZE=200 .. \
     && make -j4
+RUN rm last_commit
 
 # Check SaC installation
 RUN echo "use Array: all; int main() { a = [0,1,2]; StdIO::print(a); return a[0]; }" | sac2c -check p \
@@ -43,7 +45,7 @@ RUN echo "use Array: all; int main() { a = [0,1,2]; StdIO::print(a); return a[0]
     && rm a.out
 
 # Check for changes on remote
-ADD "https://api.github.com/repos/SacBase/sac-jupyter/commits?per_page=1" latest_commit
+ADD "https://api.github.com/repos/SacBase/sac-jupyter/commits?per_page=1" last_commit
 # Install SaC Jupyter kernel
 RUN git clone --single-branch https://github.com/SacBase/sac-jupyter.git \
     && cd sac-jupyter \
@@ -52,5 +54,6 @@ RUN git clone --single-branch https://github.com/SacBase/sac-jupyter.git \
         > /home/$NB_USER/.local/share/jupyter/kernels/sac/kernel.json \
     && cp sac/kernel.js /home/$NB_USER/.local/share/jupyter/kernels/sac \
     && chown -R $NB_USER:users /home/$NB_USER
+RUN rm last_commit
 
 USER $NB_UID
