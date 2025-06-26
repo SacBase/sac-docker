@@ -28,6 +28,7 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         push: true
+        platforms: linux/amd64,linux/arm64/v8
         tags: ${{ steps.meta.outputs.tags }}
         file: "Dockerfile.compiler"
     - name: Update DockerHub description
@@ -36,7 +37,6 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         repository: sacbase/sac-compiler
-
 
   jupyter:
     runs-on: ubuntu-latest
@@ -60,6 +60,7 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         push: true
+        platforms: linux/amd64,linux/arm64/v8
         tags: ${{ steps.meta.outputs.tags }}
         file: "Dockerfile.jupyter"
     - name: Update DockerHub description
