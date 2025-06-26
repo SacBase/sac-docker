@@ -35,7 +35,7 @@ ADD "https://api.github.com/repos/SacBase/Stdlib/commits?per_page=1" last_commit
 RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git \
     && cd Stdlib \
     && mkdir build && cd build \
-    && cmake -DBUILD_EXT=OFF -DTARGETS="seq;seq_checks" -DLINKSETSIZE=200 .. \
+    && cmake -DTARGETS="seq;seq_checks" -DBUILD_EXT=OFF -DLINKSETSIZE=200 .. \
     && make -j4
 RUN rm last_commit
 

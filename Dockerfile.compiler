@@ -21,9 +21,8 @@ RUN apt update \
 ADD "https://gitlab.sac-home.org/api/v4/projects/133/repository/commits?per_page=1" last_commit
 # Build and install SaC compiler
 RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/sac2c.git \
-    && cd sac2c && mkdir build_p && cd build_p \
-    && cmake -DBUILDGENERIC=ON -DCMAKE_BUILD_TYPE=RELEASE .. \
-    && make -j2 \
+    && cd sac2c \
+    && make release -j2 \
     && cp sac2c_p /usr/local/bin/sac2c \
     && sac2c -V
 RUN rm last_commit
@@ -34,7 +33,7 @@ ADD "https://api.github.com/repos/SacBase/Stdlib/commits?per_page=1" last_commit
 RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git \
     && cd Stdlib \
     && mkdir build && cd build \
-    && cmake -DBUILDGENERIC=ON -DLINKSETSIZE=200 .. \
+    && cmake -DBUILD_EXT=OFF -DLINKSETSIZE=200 .. \
     && make -j4
 RUN rm last_commit
 
