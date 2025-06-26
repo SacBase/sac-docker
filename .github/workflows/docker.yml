@@ -37,6 +37,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         repository: sacbase/sac-compiler
+        readme-filepath: ${{ runner.workspace }}/README.md
 
   jupyter:
     runs-on: ubuntu-latest
@@ -69,3 +70,4 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         repository: sacbase/sac-jupyter-notebook
+        readme-filepath: ${{ runner.workspace }}/README.md
