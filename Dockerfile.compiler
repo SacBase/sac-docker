@@ -9,6 +9,7 @@ RUN apt update \
         cmake \
         curl \
         git \
+        ssh \
         python3 \
         xsltproc \
         bison \
@@ -35,8 +36,7 @@ RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git 
     && mkdir build && cd build \
     && cmake -DBUILD_EXT=ON -DLINKSETSIZE=200 .. \
     && make -j4
-
-ENV PATH="$PATH:/root/.sac2crc"
+    && make install
 
 # Check SaC installation
 RUN echo "use Array: all; int main() { a = [0,1,2]; StdIO::print(a); return a[0]; }" | sac2c -check p \
