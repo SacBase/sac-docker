@@ -27,8 +27,8 @@ RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/
  && sac2c -V
 
 # Build and install the standard library
-RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git sac-stdlib \
- && cd sac-stdlib \
+RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git \
+ && cd Stdlib \
  && mkdir build && cd build \
  && cmake -DTARGETS="seq;seq_checks" -DBUILD_EXT=OFF -DLINKSETSIZE=200 .. \
  && make -j4
