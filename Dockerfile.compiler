@@ -9,7 +9,6 @@ RUN apt update \
   cmake \
   curl \
   git \
-  ssh \
   python3 \
   xsltproc \
   bison \
