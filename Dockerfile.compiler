@@ -18,11 +18,18 @@ RUN apt update \
  && apt autoclean \
  && apt --purge autoremove
 
+USER sacuser
+
+WORKDIR /home/sacbuild
+
 # Build and install the SaC compiler
 RUN git clone --single-branch --recursive https://gitlab.sac-home.org/sac-group/sac2c.git \
  && cd sac2c \
- && make release -j2 \
- && cp build_p/sac2c_p /bin/sac2c \
+ && mkdir build && cd build \
+ && cmake -DCMAKE_BUILD_TYPE=RELEASE ..
+ && make -j2 \
+ && make install \
+ && hash -r \
  && sac2c -V
 
 # Build and install the standard library
@@ -30,6 +37,7 @@ RUN git clone --single-branch --recursive https://github.com/SacBase/Stdlib.git 
  && cd Stdlib \
  && mkdir build && cd build \
  && cmake -DBUILD_EXT=ON -DLINKSETSIZE=200 .. \
- && make install -j4
+ && make -j4 \
+ && make install 
 
 WORKDIR /home
