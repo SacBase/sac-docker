@@ -33,12 +33,15 @@ Using this container with Visual Studio Code requires the `Dev Containers` exten
 Check the [documentation](https://code.visualstudio.com/docs/devcontainers/containers) for a comprehensive tutorial.
 
 In short: first add the following `.devcontainer.json` file to your local development directory
-
 ```json
 {
-  "image": "sacbase/sac-compiler"
+  "image": "sacbase/sac-compiler",
+  "runArgs": [
+    "--user", "1000:1000"
+  ]
 }
 ```
+1000:1000 is the default for most first non-root users, but otherwise get your values with `id -u` and `id -g`.
 
 In VS Code run the `Dev Containers: Open Folder in Container...` command from the Command Palette (`F1`).
 
