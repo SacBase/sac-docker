@@ -40,3 +40,5 @@ RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git 
 RUN echo "use Array: all; int main() { a = [0,1,2]; StdIO::print(a); return a[0]; }" | sac2c -check p \
     && ./a.out \
     && rm a.out*
+
+WORKDIR /home
