@@ -19,13 +19,13 @@ RUN apt update \
  && apt --purge autoremove
 
 # Build and install the SaC compiler
-RUN git clone --depth 1 --single-branch --recursive https://gitlab.sac-home.org/sac-group/sac2c.git \
+RUN git clone --single-branch --recursive https://gitlab.sac-home.org/sac-group/sac2c.git \
  && cd sac2c \
  && make install-release -j2 \
  && sac2c -V
 
 # Build and install the standard library
-RUN git clone --depth 1 --single-branch --recursive https://github.com/SacBase/Stdlib.git \
+RUN git clone --single-branch --recursive https://github.com/SacBase/Stdlib.git \
  && cd Stdlib \
  && mkdir build && cd build \
  && cmake -DBUILD_EXT=ON -DLINKSETSIZE=200 .. \
