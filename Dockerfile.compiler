@@ -21,7 +21,8 @@ RUN apt update \
 # Build and install the SaC compiler
 RUN git clone --single-branch --recursive https://gitlab.sac-home.org/sac-group/sac2c.git \
  && cd sac2c \
- && make install-release -j2 \
+ && make release -j2 \
+ && cp build_p/sac2c_p /bin/sac2c \
  && sac2c -V
 
 # Build and install the standard library
