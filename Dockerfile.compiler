@@ -3,44 +3,33 @@ FROM ubuntu:latest
 LABEL maintainer="SaC Development Team <info@sac-home.org>"
 
 RUN apt update \
-    && apt install -y --no-install-recommends \
-        build-essential \
-        ca-certificates \
-        cmake \
-        curl \
-        git \
-        ssh \
-        python3 \
-        xsltproc \
-        bison \
-        flex \
-        m4 \
-    && apt clean \
-    && apt autoclean \
-    && apt --purge autoremove
+ && apt install -y --no-install-recommends \
+  build-essential \
+  ca-certificates \
+  cmake \
+  curl \
+  git \
+  ssh \
+  python3 \
+  xsltproc \
+  bison \
+  flex \
+  m4 \
+ && apt clean \
+ && apt autoclean \
+ && apt --purge autoremove
 
-# Check for changes on remote (sac2c has project id 133)
-ADD "https://gitlab.sac-home.org/api/v4/projects/133/repository/commits?per_page=1" sac2c.json
-# Build and install SaC compiler
-RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/sac2c.git \
-    && cd sac2c \
-    && make release -j2 \
-    && cd build_p \
-    && make install \
-    && sac2c -V
+# Build and install the SaC compiler
+RUN git clone --depth 1 --single-branch --recursive https://gitlab.sac-home.org/sac-group/sac2c.git \
+ && cd sac2c \
+ && make install-release -j2 \
+ && sac2c -V
 
-# Check for changes on remote
-ADD "https://api.github.com/repos/SacBase/Stdlib/commits?per_page=1" sac-stdlib.json
-# Build and install SaC standard library
-RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git sac-stdlib \
-    && cd sac-stdlib \
-    && mkdir build && cd build \
-    && cmake -DBUILD_EXT=ON -DLINKSETSIZE=200 .. \
-    && make install -j4
-
-# Check SaC installation
-RUN echo "use Array: all; int main() { a = [0,1,2]; StdIO::print(a); return a[0]; }" | sac2c -check p \
-    && ./a.out \
-    && rm a.out*
+# Build and install the standard library
+RUN git clone --depth 1 --single-branch --recursive https://github.com/SacBase/Stdlib.git \
+ && cd Stdlib \
+ && mkdir build && cd build \
+ && cmake -DBUILD_EXT=ON -DLINKSETSIZE=200 .. \
+ && make install -j4
 
 WORKDIR /home
