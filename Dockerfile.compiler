@@ -33,7 +33,7 @@ ADD "https://api.github.com/repos/SacBase/Stdlib/commits?per_page=1" sac-stdlib.
 RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git sac-stdlib \
     && cd sac-stdlib \
     && mkdir build && cd build \
-    && cmake -DBUILD_EXT=OFF -DLINKSETSIZE=200 .. \
+    && cmake -DBUILD_EXT=ON -DLINKSETSIZE=200 .. \
     && make -j4
 
 # Check SaC installation
