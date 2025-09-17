@@ -26,7 +26,7 @@ WORKDIR /home/sacbuild
 RUN git clone --single-branch --recursive https://gitlab.sac-home.org/sac-group/sac2c.git \
  && cd sac2c \
  && mkdir build && cd build \
- && cmake -DCMAKE_BUILD_TYPE=RELEASE ..
+ && cmake -DCMAKE_BUILD_TYPE=RELEASE .. \
  && make -j2 \
  && make install \
  && hash -r \
