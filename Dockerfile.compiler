@@ -18,6 +18,9 @@ RUN apt update \
  && apt autoclean \
  && apt --purge autoremove
 
+RUN useradd -Umr -G sudo sacuser \
+    && chown -R sacuser: /usr/local \
+    && chmod 755 /usr/local
 USER sacuser
 
 WORKDIR /home/sacbuild
