@@ -36,10 +36,7 @@ In short: first add the following `.devcontainer.json` file to your local develo
 
 ```json
 {
-  "image": "sacbase/sac-compiler",
-  "mounts": [
-    "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached"
-  ]
+  "image": "sacbase/sac-compiler"
 }
 ```
 
