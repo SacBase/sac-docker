@@ -18,8 +18,6 @@ RUN apt update \
  && apt autoclean \
  && apt --purge autoremove
 
-WORKDIR /home
-
 # Build and install SaC compiler
 RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/sac2c.git \
  && cd sac2c \
@@ -35,4 +33,4 @@ RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git 
  && make -j4 \
  && make install
 
-WORKDIR /home/ubuntu
+WORKDIR /home
