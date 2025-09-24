@@ -30,7 +30,6 @@ RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git 
  && cd Stdlib \
  && mkdir build && cd build \
  && cmake -DBUILD_EXT=ON -DLINKSETSIZE=200 .. \
- && make -j4 \
- && make install
+ && make -j4
 
 WORKDIR /home
