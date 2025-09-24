@@ -18,14 +18,14 @@ RUN apt update \
  && apt autoclean \
  && apt --purge autoremove
 
-# Build and install SaC compiler
+# Build and install the SaC compiler
 RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/sac2c.git \
  && cd sac2c \
  && make release -j2 \
- && cp build_p/sac2c_p /usr/local/bin/sac2c \
+ && cp build_p/sac2c_p /usr/bin/sac2c \
  && sac2c -V
 
-# Build and install SaC standard library
+# Build and install the standard library
 RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git \
  && cd Stdlib \
  && mkdir build && cd build \
