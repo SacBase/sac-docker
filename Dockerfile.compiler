@@ -32,4 +32,7 @@ RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git 
  && cmake -DBUILD_EXT=ON -DLINKSETSIZE=200 .. \
  && make -j4
 
-WORKDIR /home
+# Copy .sac2crc to home directory
+RUN cp -r /root/.sac2crc /home/ubuntu/.sac2crc
+
+WORKDIR /home/ubuntu
