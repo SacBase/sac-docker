@@ -11,6 +11,11 @@ RUN apt update \
   git \
   python3 \
   xsltproc \
+  openmpi-bin \
+  libopenmpi-dev \
+  libhwloc-dev \
+  uuid-runtime \
+  uuid-dev \
   bison \
   flex \
   m4 \
