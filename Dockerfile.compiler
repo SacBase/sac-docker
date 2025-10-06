@@ -1,9 +1,11 @@
-FROM ubuntu:latest
+FROM debian:trixie-slim
 
 LABEL maintainer="SaC Development Team <info@sac-home.org>"
 
 RUN apt update \
  && apt install -y --no-install-recommends \
+  linux-base \
+  linux-perf \
   build-essential \
   ca-certificates \
   cmake \
@@ -38,6 +40,6 @@ RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git 
  && make -j4
 
 # Copy .sac2crc to home directory
-RUN cp -r /root/.sac2crc /home/ubuntu/.sac2crc
+RUN ls -s /root/.sac2crc /home/.sac2crc
 
 WORKDIR /home
