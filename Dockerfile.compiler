@@ -40,6 +40,6 @@ RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git 
  && make -j4
 
 # Copy .sac2crc to home directory
-#RUN ls -s /root/.sac2crc /home/.sac2crc
+RUN cp -r /root/.sac2crc /home/.sac2crc
 
 WORKDIR /home
